@@ -134,7 +134,7 @@ function login(e) {
     if (validUser) {
       window.open('./success.html', '_self')
     } else {
-      alert('There is no user with the given credentials!')
+      document.getElementById('fail-login-text').style.display = 'block';
     }
 }
 

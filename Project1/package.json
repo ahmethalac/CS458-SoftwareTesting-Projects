@@ -1,0 +1,10 @@
+{
+  "name": "Project1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "chromedriver": "^98.0.1",
+    "selenium-webdriver": "^4.1.1"
+  }
+}

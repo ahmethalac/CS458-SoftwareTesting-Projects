@@ -260,3 +260,17 @@ body.success {
 .select-language option{
     padding-left: 10px; 
 }
+
+.fail-login-text {
+    display: none;
+	padding: 10px 20px;
+    background: #e87c03;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 0 0 16px;
+    color: #fff;
+}
+
+.fail-login-text a {
+    color: inherit;
+}
