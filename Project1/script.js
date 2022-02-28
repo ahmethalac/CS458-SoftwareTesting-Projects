@@ -7,7 +7,7 @@ function validateEmail(email) {
 };
 
 function validatePhone(phone) {
-  return phone.length > 4; // ?
+  return !isNaN(phone) && phone.length > 4;
 }
 
 function validatePassword(password) {
@@ -93,19 +93,6 @@ function learnmore() {
   moresection.classList.add('visible');
 }
 
-const users = [
-  {
-    email: 'denizcalkan@hotmail.com',
-    phone: '05553332222',
-    password: 'deniz'
-  },
-  {
-    email: 'munevveruslukilic@hotmail.com',
-    phone: '05552223333',
-    password: 'munevver'
-  }
-];
-
 function login(e) {
     e.preventDefault();
     var mailOrPhoneInput = mail.value;
@@ -123,19 +110,14 @@ function login(e) {
       return;
     }
 
-    var validUser = users.some(function(user) {
-      var { email, phone, password } = user;
-      if (isPhone) {
-        return phone === mailOrPhoneInput && password === passwordInput;
-      }
-      return email === mailOrPhoneInput && password === passwordInput;
-    });
-
-    if (validUser) {
-      window.open('./success.html', '_self')
-    } else {
-      document.getElementById('fail-login-text').style.display = 'block';
-    }
+    fetch(`http://localhost:3001/users?${isPhone ? 'phone' : 'email'}=${mailOrPhoneInput}&password=${passwordInput}`)
+      .then(res => res.json()).then(user => {
+        if (user.length > 0) {
+          window.open('./success.html', '_self')
+        } else {
+          document.getElementById('fail-login-text').style.display = 'block';
+        }
+      });
 }
 
 function onFacebookLogin() {

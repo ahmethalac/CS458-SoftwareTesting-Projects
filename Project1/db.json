@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "email": "denizcalkan@hotmail.com",
+      "phone": "05553332222",
+      "password": "deniz"
+    },
+    {
+      "email": "munevveruslukilic@hotmail.com",
+      "phone": "05552223333",
+      "password": "munevver"
+    }
+  ]
+}

@@ -1,27 +1,55 @@
 require('chromedriver');
 var { Builder, By } = require('selenium-webdriver');
 
-async function run() {
-  const driver = await new Builder().forBrowser('chrome').build();
+const driver = new Builder().forBrowser('chrome').build();
 
-  await driver.get('file:///' + __dirname + '/index.html');
+const testCases = [
+  async function case1() {
+    // WORK IN PROGRESS
+    const mailInput = await driver.findElement(By.id('mail'));
+    const passwordInput = await driver.findElement(By.id('password'));
+    const signButton = await driver.findElement(By.id('signInButton'));
 
-  const mailInput = await driver.findElement(By.id('mail'));
-  const passwordInput = await driver.findElement(By.id('password'));
-  const signButton = await driver.findElement(By.id('signInButton'));
-
-  await mailInput.sendKeys('05553332222');
-  await passwordInput.sendKeys('deniz');
-  await signButton.click();
-
-  try {
-    await driver.findElement(By.className('success'));
-    console.log('Successful login');
-  } catch (error) {
-    console.log('Fail login');
+    await mailInput.sendKeys('05553332222');
+    await passwordInput.sendKeys('deniz');
+    await signButton.click();
+    await driver.sleep(500);
+    try {
+      await driver.findElement(By.className('success'));
+    } catch (error) {
+      throw new Error('Fail Login' + error);
+    }
+  },
+  async function case2() {
+    // TODO
+    throw new Error('Not implemented');
+  },
+  async function case3() {
+    // TODO
+    throw new Error('Not implemented');
+  },
+  async function case4() {
+    // TODO
+    throw new Error('Not implemented');
+  },
+  async function case5() {
+    // TODO
+    throw new Error('Not implemented');
   }
+];
 
+async function run() {
+  for (let i = 0; i < testCases.length; i++) {
+    const testCase = testCases[i];
+    await driver.get('http://localhost:3000');
+    try {
+      await testCase();
+      console.log(`Test case ${i + 1} is successful`);
+    } catch (error) {
+      console.log(`Test case ${i + 1} is failed because of error: ${error}`)
+    }
+  }
   await driver.quit();
 }
 
-run();
+driver.then(run);

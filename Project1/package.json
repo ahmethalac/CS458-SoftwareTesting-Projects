@@ -1,10 +1,22 @@
 {
-  "name": "Project1",
+  "name": "project1",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
     "chromedriver": "^98.0.1",
-    "selenium-webdriver": "^4.1.1"
+    "json-server": "^0.17.0",
+    "selenium-webdriver": "^4.1.1",
+    "serve": "^13.0.2"
+  },
+  "scripts": {
+    "start": "npm-run-all --parallel start:client start:server",
+    "start:client": "serve -p 3000",
+    "start:server": "json-server --watch db.json --port 3001",
+    "test": "npm-run-all --parallel start:client start:server start:test",
+    "start:test": "node test.js"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }
