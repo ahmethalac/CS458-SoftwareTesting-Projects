@@ -11,7 +11,7 @@ const testCases = [
     const signButton = await driver.findElement(By.id('signInButton'));
 
     await mailInput.sendKeys('05553332222');
-    await passwordInput.sendKeys('deniz');
+    await passwordInput.sendKeys('de');
     await signButton.click();
     await driver.sleep(500);
     try {
@@ -21,9 +21,21 @@ const testCases = [
     }
   },
   async function case2() {
-    // TODO
+    const mailInput = await driver.findElement(By.id('mail'));
+    const passwordInput = await driver.findElement(By.id('password'));
+    const signButton = await driver.findElement(By.id('signInButton'));
+    await mailInput.sendKeys('denizcalkan@hotmail.com'); //correct mail
+    await passwordInput.sendKeys('munevver'); //wrong password for given mail
+    await signButton.click();
+    await driver.sleep(500);
+    try {
+      await driver.findElement(By.className('success'));
+    } catch (error) {
+      throw new Error('Fail Login' + error);
+    }
     throw new Error('Not implemented');
   },
+
   async function case3() {
     // TODO
     throw new Error('Not implemented');
