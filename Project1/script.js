@@ -123,3 +123,23 @@ function login(e) {
 function onFacebookLogin() {
   console.log('Facebook Login'); // TODO
 }
+
+const rmCheck = document.getElementById("rememberMe");
+
+if (localStorage.checkbox && localStorage.checkbox !== "") {
+  rmCheck.setAttribute("checked", "checked");
+  mail.value = localStorage.username;
+} else {
+  rmCheck.removeAttribute("checked");
+  mail.value = "";
+}
+
+function lsRememberMe() {
+  if (rmCheck.checked && mail.value !== "") {
+    localStorage.username = mail.value;
+    localStorage.checkbox = rmCheck.value;
+  } else {
+    localStorage.username = "";
+    localStorage.checkbox = "";
+  }
+}
