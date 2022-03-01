@@ -7,8 +7,33 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="./images/minilogo.png">
     <title>Netflix Log In</title>
+    <script>
+        function logout() {
+            FB.logout(function(response) {
+                // user is now logged out
+            });
+            window.localStorage.setItem("remember", "0");
+            window.open('./index.html', '_self');
+        }
+
+        setTimeout(() => {
+            document.getElementById('welcome').innerText = `Welcome ${window.localStorage.getItem('username')}`
+        }, 0);
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 </head>
 <body class="success">
-   Successful Login!
+    <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId            : '962231011353706',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v13.0'
+          });
+        };
+    </script>
+   <div id="welcome"></div>
+   <button onclick="logout()">Log Out</button>
 </body>
 </html>

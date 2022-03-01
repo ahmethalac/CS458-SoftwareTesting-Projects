@@ -93,6 +93,14 @@ function learnmore() {
   moresection.classList.add('visible');
 }
 
+
+function redirectToSuccessPage(username) {
+  window.open('./success.html', '_self');
+  const rememberMe = document.getElementById('rememberMe');
+  window.localStorage.setItem("remember", rememberMe.checked ? "1" : "0");
+  window.localStorage.setItem("username", username);
+}
+
 function login(e) {
     e.preventDefault();
     var mailOrPhoneInput = mail.value;
@@ -113,7 +121,7 @@ function login(e) {
     fetch(`http://localhost:3001/users?${isPhone ? 'phone' : 'email'}=${mailOrPhoneInput}&password=${passwordInput}`)
       .then(res => res.json()).then(user => {
         if (user.length > 0) {
-          window.open('./success.html', '_self')
+          redirectToSuccessPage(user[0].name);
         } else {
           document.getElementById('fail-login-text').style.display = 'block';
         }
@@ -121,25 +129,24 @@ function login(e) {
 }
 
 function onFacebookLogin() {
-  console.log('Facebook Login'); // TODO
-}
-
-const rmCheck = document.getElementById("rememberMe");
-
-if (localStorage.checkbox && localStorage.checkbox !== "") {
-  rmCheck.setAttribute("checked", "checked");
-  mail.value = localStorage.username;
-} else {
-  rmCheck.removeAttribute("checked");
-  mail.value = "";
-}
-
-function lsRememberMe() {
-  if (rmCheck.checked && mail.value !== "") {
-    localStorage.username = mail.value;
-    localStorage.checkbox = rmCheck.value;
-  } else {
-    localStorage.username = "";
-    localStorage.checkbox = "";
-  }
+  FB.login(function(response) {
+    if (response.authResponse) {
+      FB.api('/me', function(response) {
+        console.log(response);
+        fetch(`http://localhost:3001/users?facebookID=${response.id}`).then(res => res.json()).then(user => {
+          if (user.length > 0) {
+            redirectToSuccessPage(user[0].name);
+          } else {
+             const failText = document.getElementById('fail-login-text');
+             failText.innerText = 'This Facebook account is not linked with any account on our side!';
+             failText.style.display = 'block';
+          }
+        })
+      });
+    } else {
+     console.log('User cancelled login or did not fully authorize.');
+    }
+}, {
+  enable_profile_selector: true
+});
 }

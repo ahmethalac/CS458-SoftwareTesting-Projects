@@ -12,10 +12,16 @@ body{
 body.success {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     font-size: 50px;
     background: white;
     height: 100vh;
+}
+
+body.success button {
+    width: 100px;
+    height: 50px;
 }
 
 .logoLink {

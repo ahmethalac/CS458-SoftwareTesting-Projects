@@ -9,6 +9,21 @@
     <title>Netflix</title>
 </head>
 <body>
+    <script>
+        if (window.localStorage.getItem('remember') === "1") {
+            window.open('./success.html', '_self');
+        }
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '962231011353706',
+                status     : false,
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v13.0'
+            })
+        };
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
     <div class="upper">
         <div class="logo">
             <a href="#" class="logoLink">
@@ -51,7 +66,7 @@
                 </div>
                 <div class="remember-flex">
                     <div>
-                        <input type="checkbox" value = "lsRememberMe" id = "rememberMe">
+                        <input type="checkbox" id="rememberMe">
                         <label class="color_text">Beni Hatırla</label>
                     </div>
                     <div class="help">

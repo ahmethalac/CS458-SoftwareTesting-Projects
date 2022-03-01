@@ -5,15 +5,15 @@
   "license": "MIT",
   "dependencies": {
     "chromedriver": "^98.0.1",
+    "https-localhost": "^4.7.1",
     "json-server": "^0.17.0",
-    "selenium-webdriver": "^4.1.1",
-    "serve": "^13.0.2"
+    "selenium-webdriver": "^4.1.1"
   },
   "scripts": {
     "start": "npm-run-all --parallel start:client start:server",
-    "start:client": "serve -p 3000",
+    "start:client": "serve",
     "start:server": "json-server --watch db.json --port 3001",
-    "test": "npm-run-all --parallel start:client start:server start:test",
+    "test": "npm-run-all --parallel start start:test",
     "start:test": "node test.js"
   },
   "devDependencies": {

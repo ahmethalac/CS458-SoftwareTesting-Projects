@@ -2,13 +2,22 @@
   "users": [
     {
       "email": "denizcalkan@hotmail.com",
-      "phone": "05553332222",
+      "name": "Deniz",
+      "phone": "05553333333",
       "password": "deniz"
     },
     {
       "email": "munevveruslukilic@hotmail.com",
-      "phone": "05552223333",
+      "name": "Münevver",
+      "phone": "05552222222",
       "password": "munevver"
+    },
+    {
+      "email": "ahmethalac@gmail.com",
+      "name": "Ahmet",
+      "phone": "05554444444",
+      "password": "ahmet",
+      "facebookID": "103157988987964"
     }
   ]
 }

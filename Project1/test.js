@@ -9,8 +9,8 @@ const testCases = [
     const passwordInput = await driver.findElement(By.id('password'));
     const signButton = await driver.findElement(By.id('signInButton'));
 
-    await mailInput.sendKeys('05553332222');
-    await passwordInput.sendKeys('de');
+    await mailInput.sendKeys('05553333333');
+    await passwordInput.sendKeys('deniz');
     await signButton.click();
     await driver.sleep(500);
     try {
@@ -62,7 +62,7 @@ const testCases = [
 async function run() {
   for (let i = 0; i < testCases.length; i++) {
     const testCase = testCases[i];
-    await driver.get('http://localhost:3000');
+    await driver.get('https://localhost:443');
     try {
       await testCase();
       console.log(`Test case ${i + 1} is successful`);
