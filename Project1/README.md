@@ -31,4 +31,5 @@ Run `yarn test` or `npm run test` in order to run the tests
   - Check how the code responds to valid Facebook login.
 
 - **Case 5**
+   - Verify that Enter/Tab key works as a substitute for the Sign-in button.
 

@@ -1,4 +1,3 @@
-require('chromedriver');
 var { Builder, By } = require('selenium-webdriver');
 
 const driver = new Builder().forBrowser('chrome').build();
@@ -33,22 +32,32 @@ const testCases = [
     } catch (error) {
       throw new Error('Fail Login' + error);
     }
-    throw new Error('Not implemented');
+
   },
 
   async function case3() {
-    // TODO
+
     throw new Error('Not implemented');
   },
   async function case4() {
     // TODO
     throw new Error('Not implemented');
   },
+
   async function case5() {
-    // TODO
-    throw new Error('Not implemented');
+    const mailInput = await driver.findElement(By.id('mail'));
+    const passwordInput = await driver.findElement(By.id('password'));
+    await mailInput.sendKeys('denizcalkan@hotmail.com');
+    await passwordInput.sendKeys('deniz');
+    await passwordInput.sendKeys(Keys.ENTER); //Not sure
+    await driver.sleep(500);
+    try {
+      await driver.findElement(By.className('success'));
+    } catch (error) {
+      throw new Error('Fail Login' + error);
+    }
   }
-];
+  ];
 
 async function run() {
   for (let i = 0; i < testCases.length; i++) {
