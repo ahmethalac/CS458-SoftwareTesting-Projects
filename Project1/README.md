@@ -20,25 +20,13 @@ Run `yarn test` or `npm run test` in order to run the tests
 
 #### Test Cases
 
-- **Case 1**
-  - Check how the code responds to invalid email.  
-  - Check how the code responds to invalid password.  
-  - Check how the code responds to invalid phone number.
+Test Case #1: Verify credentials.
 
-- **Case 2**
-  - Check how the code responds to wrong credentials.
-    - Correct email / Wrong password
-    - Correct phone / Wrong password
-  - Check how the code responds to correct credentials.
+Test Case #2: Verify credential pairs correspond to a user.
 
-- **Case 3**
-  - Check how the code behaves when remember me is selected.
-  - Check how the code behaves when remember me is not selected.
+Test Case #3: Verify that the remember me checkbox works correctly.
 
-- **Case 4**
-  - Check how the code responds to invalid Facebook login.
-  - Check how the code responds to valid Facebook login.
+Test Case #4: Verify Facebook login works correctly.
 
-- **Case 5**
-   - Verify that Enter/Tab key works as a substitute for the Sign-in button.
+Test Case #5: Verify that the Enter/Tab key works as a substitute for moving forward to the next textbox and Sign in button.
 
