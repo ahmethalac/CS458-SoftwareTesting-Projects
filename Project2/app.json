@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Project2",
+    "slug": "Project2",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.cs458.vaccinesurvey"
+    }
+  }
+}
