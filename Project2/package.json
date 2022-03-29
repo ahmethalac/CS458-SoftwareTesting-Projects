@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start --android",
-    "appium": "ANDROID_HOME=$(grep ANDROID_HOME HOME_PATHS | cut -d '=' -f2) JAVA_HOME=$(grep JAVA_HOME HOME_PATHS | cut -d '=' -f2) appium",
-    "test": "jest"
+    "appium": "ANDROID_HOME=$(grep ANDROID_HOME CONFIGURATIONS | cut -d '=' -f2) JAVA_HOME=$(grep JAVA_HOME CONFIGURATIONS | cut -d '=' -f2) appium",
+    "test": "PLATFORM_VERSION=$(grep PLATFORM_VERSION CONFIGURATIONS | cut -d '=' -f2) DEVICE=$(grep DEVICE CONFIGURATIONS | cut -d '=' -f2) jest"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^6.1.0",

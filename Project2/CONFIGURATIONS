@@ -1,0 +1,4 @@
+ANDROID_HOME=/home/ahmet/Android/Sdk
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+PLATFORM_VERSION=11
+DEVICE=Android Emulator
