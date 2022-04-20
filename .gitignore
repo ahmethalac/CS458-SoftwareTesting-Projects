@@ -1,3 +1,9 @@
 .idea
 /Project1/.gitignore
+/Project1/node_modules
+
+/Project2/.gitignore
 /Project2/node_modules
+
+/Project3/.gitignore
+/Project3/node_modules
