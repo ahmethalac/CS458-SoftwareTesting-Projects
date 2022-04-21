@@ -1,5 +1,5 @@
-var { Builder, By, Key } = require('selenium-webdriver');
-const { Options } = require('selenium-webdriver/chrome');
+import { Builder, By, Key } from 'selenium-webdriver';
+import { Options } from 'selenium-webdriver/chrome';
 
 describe('Geolocation Service Tests', () => {
   let driver;
