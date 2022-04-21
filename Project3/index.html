@@ -6,7 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Geolocation</title>
-    <script src="script.js"></script>
+    <script>
+        let map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 39.86900977609979, lng: 32.748087489491354 },
+                zoom: 16,
+            });
+        }
+        window.initMap = initMap;
+    </script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBica6KBhLVLLjHzITRjia-Nju1hXyxRo&callback=initMap"></script>
 </head>
 <body>
@@ -17,4 +26,5 @@
         <div id="map"></div>
     </div>
 </body>
+<script src="script.js"></script>
 </html>
