@@ -18,3 +18,10 @@ document.getElementById('submitButton').addEventListener('click', async () => {
     window.infowindow.setContent(country);
     window.infowindow.open(map, marker);
 });
+
+document.getElementById('submitButton-autoGPS').addEventListener('click', async () => {
+    window.navigator.geolocation.getCurrentPosition(({ coords: { latitude: lat, longitude: lng }}) => {
+        const distanceToNorthPole = google.maps.geometry.spherical.computeDistanceBetween({ lat: 90, lng: 0 }, { lat, lng });
+        document.getElementById('northPole').textContent = Math.floor(distanceToNorthPole / 1000);
+    });
+});

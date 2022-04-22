@@ -19,7 +19,7 @@
         }
         window.initMap = initMap;
     </script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBica6KBhLVLLjHzITRjia-Nju1hXyxRo&callback=initMap"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBica6KBhLVLLjHzITRjia-Nju1hXyxRo&callback=initMap&libraries=geometry"></script>
 </head>
 <body>
     <div class="container">
@@ -31,10 +31,12 @@
                 </div>
                 <div>
                     <button id="submitButton">Show Country</button>
+                    <button id="submitButton-autoGPS">Show Distance to North Pole</button>
                 </div>
             </div>
             <div class="rightPanel">
                 <div>Country: <span id="country"></span></div>
+                <div>Distance to North Pole: <span id="northPole"></span> kms</div>
             </div>
         </div>
         <div id="map"></div>
