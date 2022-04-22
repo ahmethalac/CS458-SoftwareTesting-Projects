@@ -35,7 +35,7 @@ describe('Geolocation Service Tests', () => {
         let country = await countryDiv.getText();
         expect(country).toBe('');
 
-        await driver.findElement(By.id('submitButton')).click();
+        await driver.findElement(By.id('showCountry')).click();
 
         await driver.wait(async () => {
           country = await countryDiv.getText();
@@ -63,7 +63,7 @@ describe('Geolocation Service Tests', () => {
         let distance = await distanceDiv.getText();
         expect(distance).toBe('');
 
-        await driver.findElement(By.id('submitButton-autoGPS')).click();
+        await driver.findElement(By.id('showNorthPoleDistance')).click();
 
         await driver.wait(async () => {
           distance = await distanceDiv.getText();

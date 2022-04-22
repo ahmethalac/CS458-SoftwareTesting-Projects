@@ -1,4 +1,4 @@
-document.getElementById('submitButton').addEventListener('click', async () => {
+document.getElementById('showCountry').addEventListener('click', async () => {
     const lat = parseFloat(document.getElementById('latInput').value);
     const lng = parseFloat(document.getElementById('lngInput').value);
     if (!lat || !lng) return;
@@ -19,7 +19,7 @@ document.getElementById('submitButton').addEventListener('click', async () => {
     window.infowindow.open(map, marker);
 });
 
-document.getElementById('submitButton-autoGPS').addEventListener('click', async () => {
+document.getElementById('showNorthPoleDistance').addEventListener('click', async () => {
     window.navigator.geolocation.getCurrentPosition(({ coords: { latitude: lat, longitude: lng }}) => {
         const distanceToNorthPole = google.maps.geometry.spherical.computeDistanceBetween({ lat: 90, lng: 0 }, { lat, lng });
         document.getElementById('northPole').textContent = Math.floor(distanceToNorthPole / 1000);

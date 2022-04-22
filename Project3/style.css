@@ -12,30 +12,35 @@ body {
 }
 
 #map {
-    flex: 0.8;
+    flex: 1;
 }
 
 .actions {
-    flex: 0.2;
     display: flex;
 }
 
 .actions > * {
+    min-height: 150px;
     flex: 1;
-    padding: 10px;
-}
-
-.actions > .rightPanel {
     display: flex;
     flex-direction: column;
-    border-left: 1px solid black;
+    padding: 10px;
+    border-bottom: 1px solid black;
 }
 
-.actions > .rightPanel > * {
-    padding: 10px 0;
+.actions > *:not(:last-child) {
+    border-right: 1px solid black;
 }
 
-.actions > .rightPanel span {
+.actions > div > * {
+    margin-bottom: 10px;
+}
+
+.actions .result {
+    font-size: 20px;
+}
+
+.actions .result span {
     font-weight: bold;
 }
 
@@ -53,7 +58,7 @@ body {
     margin-left: 10px;
 }
 
-#submitButton {
+#showCountry, #showNorthPoleDistance {
     width: 100%;
     padding: 5px;
 }
@@ -61,14 +66,9 @@ body {
 @media only screen and (max-width: 768px) {
     .actions {
         flex-direction: column;
-        flex: 0.4;
     }
 
     .actions > .rightPanel {
         border-left: none;
-    }
-
-    #map {
-        flex: 0.6;
     }
   }
