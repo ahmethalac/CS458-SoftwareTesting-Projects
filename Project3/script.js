@@ -1,9 +1,5 @@
-document.getElementById('showCountry').addEventListener('click', async () => {
-    const lat = parseFloat(document.getElementById('latInput').value);
-    const lng = parseFloat(document.getElementById('lngInput').value);
-    if (!lat || !lng) return;
-
-    const { results } = await window.geocoder.geocode({ location: { lat, lng } });
+const setCountry = async coordinates => {
+    const { results } = await window.geocoder.geocode({ location: coordinates });
     const { formatted_address: country } = results.find(result => result?.types.includes('country')) || {};
     if (!country) return;
 
@@ -11,12 +7,20 @@ document.getElementById('showCountry').addEventListener('click', async () => {
 
     window.map.setZoom(6);
     const marker = new google.maps.Marker({
-        position: { lat, lng },
+        position: coordinates,
         map: window.map
     });
-    window.map.setCenter({ lat, lng });
+    window.map.setCenter(coordinates);
     window.infowindow.setContent(country);
     window.infowindow.open(map, marker);
+}
+
+document.getElementById('showCountry').addEventListener('click', async () => {
+    const lat = parseFloat(document.getElementById('latInput').value);
+    const lng = parseFloat(document.getElementById('lngInput').value);
+    if (!lat || !lng) return;
+
+    await setCountry({ lat, lng });
 });
 
 document.getElementById('showNorthPoleDistance').addEventListener('click', async () => {
@@ -28,19 +32,6 @@ document.getElementById('showNorthPoleDistance').addEventListener('click', async
 
 document.getElementById('showCountry-autoGPS').addEventListener('click', async () => {
     window.navigator.geolocation.getCurrentPosition(async ({ coords: { latitude: lat, longitude: lng }}) => {
-        const { results } = await window.geocoder.geocode({ location: { lat, lng } });
-        const { formatted_address: country } = results.find(result => result?.types.includes('country')) || {};
-        if (!country) return;
-    
-        document.getElementById('country').textContent = country;
-    
-        window.map.setZoom(6);
-        const marker = new google.maps.Marker({
-            position: { lat, lng },
-            map: window.map
-        });
-        window.map.setCenter({ lat, lng });
-        window.infowindow.setContent(country);
-        window.infowindow.open(map, marker);
+        await setCountry({ lat, lng });
     });
 });

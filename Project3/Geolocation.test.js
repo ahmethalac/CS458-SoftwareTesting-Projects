@@ -8,6 +8,16 @@ describe('Geolocation Service Tests', () => {
   let driver;
   const loginPage = 'https://localhost:3001';
 
+  const setCurrentLocation = async (latitude, longitude) => {
+    // Set geolocation of the device
+    const pageCdpConnection = await driver.createCDPConnection('page');
+    await pageCdpConnection.execute("Emulation.setGeolocationOverride", {
+      latitude,
+      longitude,
+      accuracy: 100
+    });
+  }
+
   beforeAll(() => {
     const chromeOptions = new Options();
     chromeOptions.excludeSwitches('enable-logging');
@@ -45,13 +55,7 @@ describe('Geolocation Service Tests', () => {
       });
 
       it(`should show correct country for current location (${expectedCountry})`, async () => {
-        // Set geolocation of the device
-        const pageCdpConnection = await driver.createCDPConnection('page');
-        await pageCdpConnection.execute("Emulation.setGeolocationOverride", {
-          latitude,
-          longitude,
-          accuracy: 100
-        });
+        await setCurrentLocation(latitude, longitude);
 
         const countryDiv = await driver.findElement(By.id('country'));
         let country = await countryDiv.getText();
@@ -73,13 +77,7 @@ describe('Geolocation Service Tests', () => {
     COORDINATE_MAPPINGS.forEach(({ coordinates, distance: expectedDistance, country }, index) => {
       const { latitude, longitude } = coordinates;
       it(`should calculate distance between Geographic North Pole and dummy location in ${country}`, async () => {
-        // Set geolocation of the device
-        const pageCdpConnection = await driver.createCDPConnection('page');
-        await pageCdpConnection.execute("Emulation.setGeolocationOverride", {
-          latitude,
-          longitude,
-          accuracy: 100
-        });
+        await setCurrentLocation(latitude, longitude);
         
         const distanceDiv = await driver.findElement(By.id('northPole'));
         let distance = await distanceDiv.getText();
