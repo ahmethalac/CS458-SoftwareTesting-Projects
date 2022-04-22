@@ -26,7 +26,7 @@ Test Case #1: App should show the correct country for various different location
 
 Test Case #2: App should correctly calculate the distance to Geographic North Pole.
 
-Test Case #3: TBD
+Test Case #3: App should show the correct country for current location.
 
 Test Case #4: TBD
 

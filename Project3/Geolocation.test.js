@@ -24,10 +24,9 @@ describe('Geolocation Service Tests', () => {
   });
   
   describe('Showing country according to coordinates', () => {
-
     COORDINATE_MAPPINGS.forEach(({ coordinates, country: expectedCountry }, index) => {
       const { latitude, longitude } = coordinates;
-      it(`should show '${expectedCountry}' for dummy location #${index}`, async () => {
+      it(`should show correct country for specified location (${expectedCountry})`, async () => {
         await driver.findElement(By.id('latInput')).sendKeys(latitude);
         await driver.findElement(By.id('lngInput')).sendKeys(longitude);
 
@@ -44,13 +43,36 @@ describe('Geolocation Service Tests', () => {
         
         expect(country).toBe(expectedCountry);
       });
+
+      it(`should show correct country for current location (${expectedCountry})`, async () => {
+        // Set geolocation of the device
+        const pageCdpConnection = await driver.createCDPConnection('page');
+        await pageCdpConnection.execute("Emulation.setGeolocationOverride", {
+          latitude,
+          longitude,
+          accuracy: 100
+        });
+
+        const countryDiv = await driver.findElement(By.id('country'));
+        let country = await countryDiv.getText();
+        expect(country).toBe('');
+
+        await driver.findElement(By.id('showCountry-autoGPS')).click();
+
+        await driver.wait(async () => {
+          country = await countryDiv.getText();
+          return !!country;
+        }, 5000);
+        
+        expect(country).toBe(expectedCountry);
+      });
     })
   });
 
   describe('Showing distance to Geographic North Pole', () => {
-    COORDINATE_MAPPINGS.forEach(({ coordinates, distance: expectedDistance }, index) => {
+    COORDINATE_MAPPINGS.forEach(({ coordinates, distance: expectedDistance, country }, index) => {
       const { latitude, longitude } = coordinates;
-      it(`should calculate distance between Geographic North Pole and dummy location #${index}`, async () => {
+      it(`should calculate distance between Geographic North Pole and dummy location in ${country}`, async () => {
         // Set geolocation of the device
         const pageCdpConnection = await driver.createCDPConnection('page');
         await pageCdpConnection.execute("Emulation.setGeolocationOverride", {
