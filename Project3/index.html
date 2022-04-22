@@ -23,20 +23,26 @@
 </head>
 <body>
     <div class="container">
+        <div class="inputs">
+            <input id='latInput' placeholder="Latitude" />
+            <input id='lngInput' placeholder="Longitude" />
+        </div>
         <div class="actions">
             <div class="countryPanel">
-                <div class="inputs">
-                    <input id='latInput' placeholder="Latitude" />
-                    <input id='lngInput' placeholder="Longitude" />
+                Show Country of:
+                <div class="buttons">
+                    <button id="showCountry">Specified Location</button>
+                    <button id="showCountry-autoGPS">Current Location</button>
                 </div>
-                <button id="showCountry">Show Country</button>
-                <button id="showCountry-autoGPS">Show Country of Current Location</button>
                 <div style="flex: 1;"></div>
                 <div class="result">Country: <span id="country"></span></div>
             </div>
             <div class="northPolePanel">
-                <button id="showNorthPoleDistance-autoGPS">Show Distance to North Pole</button>
-                <button id="showNorthPoleDistance">Show Distance to North Pole from Current Location</button>
+                Show Distance to North Pole from:
+                <div class="buttons">
+                    <button id="showNorthPoleDistance">Specified Location</button>
+                    <button id="showNorthPoleDistance-autoGPS">Current Location</button>
+                </div>
                 <div style="flex: 1;"></div>
                 <div class="result">Distance to North Pole: <span id="northPole"></span> <b>kms</b></div>
             </div>
