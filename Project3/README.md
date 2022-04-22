@@ -24,7 +24,7 @@ Run `yarn test` or `npm run test` in order to run the tests
 
 Test Case #1: App should show the correct country for various different locations.
 
-Test Case #2: TBD
+Test Case #2: App should correctly calculate the distance to Geographic North Pole.
 
 Test Case #3: TBD
 
