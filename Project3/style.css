@@ -16,5 +16,59 @@ body {
 }
 
 .actions {
-    flex: 0.2
+    flex: 0.2;
+    display: flex;
 }
+
+.actions > * {
+    flex: 1;
+    padding: 10px;
+}
+
+.actions > .rightPanel {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid black;
+}
+
+.actions > .rightPanel > * {
+    padding: 10px 0;
+}
+
+.actions > .rightPanel span {
+    font-weight: bold;
+}
+
+.inputs {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.inputs > * {
+    flex: 1;
+    padding: 5px;
+}
+
+.inputs > *:last-child {
+    margin-left: 10px;
+}
+
+#submitButton {
+    width: 100%;
+    padding: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    .actions {
+        flex-direction: column;
+        flex: 0.4;
+    }
+
+    .actions > .rightPanel {
+        border-left: none;
+    }
+
+    #map {
+        flex: 0.6;
+    }
+  }

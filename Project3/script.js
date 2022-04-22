@@ -8,4 +8,13 @@ document.getElementById('submitButton').addEventListener('click', async () => {
     if (!country) return;
 
     document.getElementById('country').textContent = country;
+
+    window.map.setZoom(6);
+    const marker = new google.maps.Marker({
+        position: { lat, lng },
+        map: window.map
+    });
+    window.map.setCenter({ lat, lng });
+    window.infowindow.setContent(country);
+    window.infowindow.open(map, marker);
 });

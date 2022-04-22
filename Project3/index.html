@@ -13,7 +13,9 @@
                 center: { lat: 39.86900977609979, lng: 32.748087489491354 },
                 zoom: 16,
             });
+            window.map = map;
             window.geocoder = new google.maps.Geocoder();
+            window.infowindow = new google.maps.InfoWindow();
         }
         window.initMap = initMap;
     </script>
@@ -22,17 +24,17 @@
 <body>
     <div class="container">
         <div class="actions">
-            <div>
-                <div>
-                    <input id='latInput' />
-                    <input id='lngInput' />
+            <div class="leftPanel">
+                <div class="inputs">
+                    <input id='latInput' placeholder="Latitude" />
+                    <input id='lngInput' placeholder="Longitude" />
                 </div>
                 <div>
                     <button id="submitButton">Show Country</button>
                 </div>
             </div>
-            <div>
-                <div id="country"></div>
+            <div class="rightPanel">
+                <div>Country: <span id="country"></span></div>
             </div>
         </div>
         <div id="map"></div>
