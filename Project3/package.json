@@ -11,8 +11,9 @@
   },
   "scripts": {
     "start": "PORT=3000 serve > serve.txt",
-    "test": "npm-run-all -r -p start start:test",
-    "start:test": "jest"
+    "start:test-server": "PORT=3001 serve > serve.txt",
+    "start:test": "jest",
+    "test": "npm-run-all -r -p start:test-server start:test"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.17.9",

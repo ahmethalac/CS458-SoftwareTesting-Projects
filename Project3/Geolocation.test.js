@@ -3,7 +3,7 @@ import { Options } from 'selenium-webdriver/chrome';
 
 describe('Geolocation Service Tests', () => {
   let driver;
-  const loginPage = 'https://localhost:3000';
+  const loginPage = 'https://localhost:3001';
 
   beforeAll(() => {
     const chromeOptions = new Options();
