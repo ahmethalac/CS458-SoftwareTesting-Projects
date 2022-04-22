@@ -30,6 +30,15 @@ document.getElementById('showNorthPoleDistance-autoGPS').addEventListener('click
     });
 });
 
+document.getElementById('showNorthPoleDistance').addEventListener('click', async () => {
+    const lat = parseFloat(document.getElementById('latInput').value);
+    const lng = parseFloat(document.getElementById('lngInput').value);
+    if (!lat || !lng) return;
+
+    const distanceToNorthPole = google.maps.geometry.spherical.computeDistanceBetween({ lat: 90, lng: 0 }, { lat, lng });
+    document.getElementById('northPole').textContent = Math.floor(distanceToNorthPole / 1000);
+});
+
 document.getElementById('showCountry-autoGPS').addEventListener('click', async () => {
     window.navigator.geolocation.getCurrentPosition(async ({ coords: { latitude: lat, longitude: lng }}) => {
         await setCountry({ lat, lng });
