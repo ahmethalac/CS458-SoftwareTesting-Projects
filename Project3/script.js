@@ -25,3 +25,22 @@ document.getElementById('showNorthPoleDistance').addEventListener('click', async
         document.getElementById('northPole').textContent = Math.floor(distanceToNorthPole / 1000);
     });
 });
+
+document.getElementById('showCountry-autoGPS').addEventListener('click', async () => {
+    window.navigator.geolocation.getCurrentPosition(async ({ coords: { latitude: lat, longitude: lng }}) => {
+        const { results } = await window.geocoder.geocode({ location: { lat, lng } });
+        const { formatted_address: country } = results.find(result => result?.types.includes('country')) || {};
+        if (!country) return;
+    
+        document.getElementById('country').textContent = country;
+    
+        window.map.setZoom(6);
+        const marker = new google.maps.Marker({
+            position: { lat, lng },
+            map: window.map
+        });
+        window.map.setCenter({ lat, lng });
+        window.infowindow.setContent(country);
+        window.infowindow.open(map, marker);
+    });
+});
