@@ -23,7 +23,7 @@ document.getElementById('showCountry').addEventListener('click', async () => {
     await setCountry({ lat, lng });
 });
 
-document.getElementById('showNorthPoleDistance').addEventListener('click', async () => {
+document.getElementById('showNorthPoleDistance-autoGPS').addEventListener('click', async () => {
     window.navigator.geolocation.getCurrentPosition(({ coords: { latitude: lat, longitude: lng }}) => {
         const distanceToNorthPole = google.maps.geometry.spherical.computeDistanceBetween({ lat: 90, lng: 0 }, { lat, lng });
         document.getElementById('northPole').textContent = Math.floor(distanceToNorthPole / 1000);

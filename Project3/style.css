@@ -58,8 +58,7 @@ body {
     margin-left: 10px;
 }
 
-#showCountry, #showNorthPoleDistance {
-    width: 100%;
+button {
     padding: 5px;
 }
 

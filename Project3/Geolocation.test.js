@@ -36,7 +36,7 @@ describe('Geolocation Service Tests', () => {
   describe('Showing country according to coordinates', () => {
     COORDINATE_MAPPINGS.forEach(({ coordinates, country: expectedCountry }, index) => {
       const { latitude, longitude } = coordinates;
-      it(`should show correct country for specified location (${expectedCountry})`, async () => {
+      test(`for specified location (${expectedCountry})`, async () => {
         await driver.findElement(By.id('latInput')).sendKeys(latitude);
         await driver.findElement(By.id('lngInput')).sendKeys(longitude);
 
@@ -54,7 +54,7 @@ describe('Geolocation Service Tests', () => {
         expect(country).toBe(expectedCountry);
       });
 
-      it(`should show correct country for current location (${expectedCountry})`, async () => {
+      test(`for current location (${expectedCountry})`, async () => {
         await setCurrentLocation(latitude, longitude);
 
         const countryDiv = await driver.findElement(By.id('country'));
@@ -76,8 +76,26 @@ describe('Geolocation Service Tests', () => {
   describe('Showing distance to Geographic North Pole', () => {
     COORDINATE_MAPPINGS.forEach(({ coordinates, distance: expectedDistance, country }, index) => {
       const { latitude, longitude } = coordinates;
-      it(`should calculate distance between Geographic North Pole and dummy location in ${country}`, async () => {
+      test(`from current location (${country})`, async () => {
         await setCurrentLocation(latitude, longitude);
+        
+        const distanceDiv = await driver.findElement(By.id('northPole'));
+        let distance = await distanceDiv.getText();
+        expect(distance).toBe('');
+
+        await driver.findElement(By.id('showNorthPoleDistance-autoGPS')).click();
+
+        await driver.wait(async () => {
+          distance = await distanceDiv.getText();
+          return !!distance;
+        }, 20000);
+        
+        expect(Math.abs(distance - expectedDistance)).toBeLessThanOrEqual(2);
+      });
+
+      test(`from specified location (${country})`, async () => {
+        await driver.findElement(By.id('latInput')).sendKeys(latitude);
+        await driver.findElement(By.id('lngInput')).sendKeys(longitude);
         
         const distanceDiv = await driver.findElement(By.id('northPole'));
         let distance = await distanceDiv.getText();
