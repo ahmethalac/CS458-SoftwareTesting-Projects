@@ -22,7 +22,7 @@ Run `yarn test` or `npm run test` in order to run the tests
 
 #### Test Cases
 
-Test Case #1: TBD
+Test Case #1: App should show the correct country for various different locations.
 
 Test Case #2: TBD
 
