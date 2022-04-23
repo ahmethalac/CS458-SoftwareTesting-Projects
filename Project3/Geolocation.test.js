@@ -37,6 +37,7 @@ describe('Geolocation Service Tests', () => {
     COORDINATE_MAPPINGS.forEach(({ coordinates, country: expectedCountry }, index) => {
       const { latitude, longitude } = coordinates;
       test(`for specified location (${expectedCountry})`, async () => {
+        // Test Case #1
         await driver.findElement(By.id('latInput')).sendKeys(latitude);
         await driver.findElement(By.id('lngInput')).sendKeys(longitude);
 
@@ -55,6 +56,7 @@ describe('Geolocation Service Tests', () => {
       });
 
       test(`for current location (${expectedCountry})`, async () => {
+        // Test Case #3
         await setCurrentLocation(latitude, longitude);
 
         const countryDiv = await driver.findElement(By.id('country'));
@@ -77,6 +79,7 @@ describe('Geolocation Service Tests', () => {
     COORDINATE_MAPPINGS.forEach(({ coordinates, distance: expectedDistance, country }, index) => {
       const { latitude, longitude } = coordinates;
       test(`from current location (${country})`, async () => {
+        // Test Case #2
         await setCurrentLocation(latitude, longitude);
         
         const distanceDiv = await driver.findElement(By.id('northPole'));
@@ -94,6 +97,7 @@ describe('Geolocation Service Tests', () => {
       });
 
       test(`from specified location (${country})`, async () => {
+        // Test Case #4
         await driver.findElement(By.id('latInput')).sendKeys(latitude);
         await driver.findElement(By.id('lngInput')).sendKeys(longitude);
         
@@ -113,4 +117,58 @@ describe('Geolocation Service Tests', () => {
     });
   });
 
+  // Test Case #5
+  describe('Handling invalid latitude/longitude inputs', () => {
+    let errorTextDiv;
+
+    beforeEach(async () => {
+      errorTextDiv = await driver.findElement(By.id('errorText'));
+    });
+
+    const fillCoordinates = async (latitude, longitude) => {
+      await driver.findElement(By.id('latInput')).clear();
+      await driver.findElement(By.id('lngInput')).clear();
+
+      await driver.findElement(By.id('latInput')).sendKeys(latitude);
+      await driver.findElement(By.id('lngInput')).sendKeys(longitude);
+    }
+
+    test('should give error if either latitude or longitude is empty', async () => {
+      await fillCoordinates('', '');
+      await driver.findElement(By.id('showCountry')).click();
+      expect(await errorTextDiv.getText()).toBe('Latitude cannot be empty!');
+
+      await fillCoordinates('Test', '');
+      await driver.findElement(By.id('showCountry')).click();
+      expect(await errorTextDiv.getText()).toBe('Longitude cannot be empty!');
+
+      await fillCoordinates('', 'Test');
+      await driver.findElement(By.id('showCountry')).click();
+      expect(await errorTextDiv.getText()).toBe('Latitude cannot be empty!');
+    });
+
+    test('should give error if either latitude or longitude is not a number', async () => {
+      await fillCoordinates('Test', 'Test');
+      await driver.findElement(By.id('showCountry')).click();
+      expect(await errorTextDiv.getText()).toBe('Latitude must be number!');
+      
+      await fillCoordinates('35.1212', 'Test');
+      await driver.findElement(By.id('showCountry')).click();
+      expect(await errorTextDiv.getText()).toBe('Longitude must be number!');
+
+      await fillCoordinates('Test', '35.1212');
+      await driver.findElement(By.id('showCountry')).click();
+      expect(await errorTextDiv.getText()).toBe('Latitude must be number!');
+    });
+
+    test('should give error if either latitude or longitude is not in correct range', async () => {  // ([-90, 90] for latitude, [-180, 180] for longitude)
+      await fillCoordinates('-100', '35.1212');
+      await driver.findElement(By.id('showCountry')).click();
+      expect(await errorTextDiv.getText()).toBe('Latitude must be in range (-90, 90)!');
+
+      await fillCoordinates('35.1212', '-200');
+      await driver.findElement(By.id('showCountry')).click();
+      expect(await errorTextDiv.getText()).toBe('Longitude must be in range (-180, 180)!');
+    });
+  });
 });

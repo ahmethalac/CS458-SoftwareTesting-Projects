@@ -30,4 +30,4 @@ Test Case #3: App should show the correct country for current location.
 
 Test Case #4: App should correctly calculate the distance between specified location and Geographic North Pole.
 
-Test Case #5: TBD
+Test Case #5: App should handle invalid latitude/longitude inputs by giving errors
