@@ -171,4 +171,20 @@ describe('Geolocation Service Tests', () => {
       expect(await errorTextDiv.getText()).toBe('Longitude must be in range (-180, 180)!');
     });
   });
+
+  // Test Case #6
+  test('should give error if no country information found for specified location', async () => {
+    // (0, 0) coordinates are not in any country
+    await driver.findElement(By.id('latInput')).sendKeys('0');
+    await driver.findElement(By.id('lngInput')).sendKeys('0');
+    await driver.findElement(By.id('showCountry')).click();
+
+    let error;
+    await driver.wait(async () => {
+      error = await driver.findElement(By.id('errorText')).getText();
+      return !!error;
+    }, 5000);
+
+    expect(error).toBe('No country information found!');
+  });
 });
