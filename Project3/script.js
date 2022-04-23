@@ -1,10 +1,31 @@
+let timeout;
+const showError = text => {
+    if (timeout) clearTimeout(timeout);
+    document.getElementById('errorText').textContent = text;
+    timeout = setTimeout(() => {
+        document.getElementById('errorText').textContent = '';  
+    }, 2000);
+}
+
 let marker;
 const setCountry = async coordinates => {
+    window.map.setZoom(6);
+    if (marker) marker.setMap(null);
+    marker = new google.maps.Marker({
+        position: coordinates,
+        map: window.map
+    });
+    window.map.setCenter(coordinates);
+
+    let results;
     try {
-        const { results } = await window.geocoder.geocode({ location: coordinates });
+        const response = await window.geocoder.geocode({ location: coordinates });
+        results = response.results;
     } catch (error) {
         if (error.code === 'ZERO_RESULTS') {
             showError('No country information found!');
+        } else {
+            showError('Error occurred while retrieving the country!');
         }
         return;
     }
@@ -13,14 +34,6 @@ const setCountry = async coordinates => {
 
     document.getElementById('country').textContent = country;
 
-    window.map.setZoom(6);
-
-    if (marker) marker.setMap(null);
-    marker = new google.maps.Marker({
-        position: coordinates,
-        map: window.map
-    });
-    window.map.setCenter(coordinates);
     window.infowindow.setContent(country);
     window.infowindow.open(map, marker);
 }
@@ -39,15 +52,6 @@ const setLocation = async coordinates => {
     window.map.setCenter(coordinates);
     window.infowindow.setContent(`${distanceInKms} kms`);
     window.infowindow.open(map, marker);
-}
-
-let timeout;
-const showError = text => {
-    if (timeout) clearTimeout(timeout);
-    document.getElementById('errorText').textContent = text;
-    timeout = setTimeout(() => {
-        document.getElementById('errorText').textContent = '';  
-    }, 2000);
 }
 
 const validateLatLng = (lat, lng) => {
