@@ -1,6 +1,13 @@
 let marker;
 const setCountry = async coordinates => {
-    const { results } = await window.geocoder.geocode({ location: coordinates });
+    try {
+        const { results } = await window.geocoder.geocode({ location: coordinates });
+    } catch (error) {
+        if (error.code === 'ZERO_RESULTS') {
+            showError('No country information found!');
+        }
+        return;
+    }
     const { formatted_address: country } = results.find(result => result?.types.includes('country')) || {};
     if (!country) return;
 
