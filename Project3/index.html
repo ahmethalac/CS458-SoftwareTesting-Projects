@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Geolocation</title>
+    <script src="suncalc2.js"></script>
     <script>
         let map, geocoder;
         function initMap() {
@@ -29,7 +30,7 @@
         </div>
         <div id="errorText"></div>
         <div class="actions">
-            <div class="countryPanel">
+            <div>
                 Show Country of:
                 <div class="buttons">
                     <button id="showCountry">Specified Location</button>
@@ -38,7 +39,7 @@
                 <div style="flex: 1;"></div>
                 <div class="result">Country: <span id="country"></span></div>
             </div>
-            <div class="northPolePanel">
+            <div>
                 Show Distance to North Pole from:
                 <div class="buttons">
                     <button id="showNorthPoleDistance">Specified Location</button>
@@ -46,6 +47,15 @@
                 </div>
                 <div style="flex: 1;"></div>
                 <div class="result">Distance to North Pole: <span id="northPole"></span> <b>kms</b></div>
+            </div>
+            <div>
+                Show Distance to Moon
+                <div class="buttons">
+                    <button id="showMoonDistance">Specified Location</button>
+                    <button id="showMoonDistance-autoGPS">Current Location</button>
+                </div>
+                <div style="flex: 1;"></div>
+                <div class="result">Distance to Moon: <span id="moon"></span> <b>kms</b></div>
             </div>
         </div>
         <div id="map"></div>

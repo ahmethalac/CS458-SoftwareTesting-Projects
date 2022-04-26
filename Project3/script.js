@@ -54,6 +54,22 @@ const setLocation = async coordinates => {
     window.infowindow.open(map, marker);
 }
 
+const setMoonDistance = async coordinates => {
+    const { latitude, longitude } = coordinates;
+    const distanceToMoon = Math.round(window.SunCalc.getMoonPosition(new Date(), latitude, longitude).distance);
+    document.getElementById('moon').textContent = distanceToMoon;
+
+    window.map.setZoom(6);
+    if (marker) marker.setMap(null);
+    marker = new google.maps.Marker({
+        position: coordinates,
+        map: window.map
+    });
+    window.map.setCenter(coordinates);
+    window.infowindow.setContent(`${distanceToMoon} kms`);
+    window.infowindow.open(map, marker);
+}
+
 const validateLatLng = (lat, lng) => {
     if (lat === '') {
         showError('Latitude cannot be empty!');
@@ -114,5 +130,21 @@ document.getElementById('showNorthPoleDistance').addEventListener('click', async
 document.getElementById('showNorthPoleDistance-autoGPS').addEventListener('click', async () => {
     window.navigator.geolocation.getCurrentPosition(async ({ coords: { latitude: lat, longitude: lng }}) => {
         setLocation({ lat, lng });
+    });
+});
+
+document.getElementById('showMoonDistance').addEventListener('click', async () => {
+    const lat = document.getElementById('latInput').value;
+    const lng = document.getElementById('lngInput').value;
+    
+    const validatedCoordinates = validateLatLng(lat, lng);
+    if (!validatedCoordinates) return;
+    
+    setMoonDistance(validatedCoordinates);
+});
+
+document.getElementById('showMoonDistance-autoGPS').addEventListener('click', async () => {
+    window.navigator.geolocation.getCurrentPosition(async ({ coords: { latitude: lat, longitude: lng }}) => {
+        setMoonDistance({ lat, lng });
     });
 });
