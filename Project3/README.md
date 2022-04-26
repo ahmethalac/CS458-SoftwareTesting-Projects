@@ -33,3 +33,7 @@ Test Case #4: App should correctly calculate the distance between specified loca
 Test Case #5: App should handle invalid latitude/longitude inputs by giving errors
 
 Test Case #5: App should give error if there is no country with the specified coordinates
+
+Test Case #6: App should give error if no country information found for specified location
+
+Test Case #7: App should correctly calculate the distance to moon for both current location and specified coordinates

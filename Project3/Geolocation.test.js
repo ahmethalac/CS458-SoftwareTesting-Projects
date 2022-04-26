@@ -1,6 +1,7 @@
 import { Builder, By, Key } from 'selenium-webdriver';
 import { Options } from 'selenium-webdriver/chrome';
 import { COORDINATE_MAPPINGS } from './constants';
+import SunCalc from 'suncalc2';
 
 jest.setTimeout(30000);
 
@@ -186,5 +187,47 @@ describe('Geolocation Service Tests', () => {
     }, 5000);
 
     expect(error).toBe('No country information found!');
+  });
+
+  // Test Case #7
+  describe('Showing distance to Moon', () => {
+    COORDINATE_MAPPINGS.forEach(({ coordinates, country }, index) => {
+      const { latitude, longitude } = coordinates;
+      const expectedDistance = Math.round(SunCalc.getMoonPosition(new Date(), latitude, longitude).distance);
+      test(`from current location (${country})`, async () => {
+        await setCurrentLocation(latitude, longitude);
+        
+        const distanceDiv = await driver.findElement(By.id('moon'));
+        let distance = await distanceDiv.getText();
+        expect(distance).toBe('');
+
+        await driver.findElement(By.id('showMoonDistance-autoGPS')).click();
+
+        await driver.wait(async () => {
+          distance = await distanceDiv.getText();
+          return !!distance;
+        }, 20000);
+        
+        expect(Math.abs(distance - expectedDistance)).toBeLessThanOrEqual(5);
+      });
+
+      test(`from specified location (${country})`, async () => {
+        await driver.findElement(By.id('latInput')).sendKeys(latitude);
+        await driver.findElement(By.id('lngInput')).sendKeys(longitude);
+        
+        const distanceDiv = await driver.findElement(By.id('moon'));
+        let distance = await distanceDiv.getText();
+        expect(distance).toBe('');
+
+        await driver.findElement(By.id('showMoonDistance')).click();
+
+        await driver.wait(async () => {
+          distance = await distanceDiv.getText();
+          return !!distance;
+        }, 5000);
+        
+        expect(Math.abs(distance - expectedDistance)).toBeLessThanOrEqual(5);
+      });
+    });
   });
 });
