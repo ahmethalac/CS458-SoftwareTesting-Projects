@@ -7,14 +7,17 @@
   "dependencies": {
     "chromedriver": "100.0.0",
     "https-localhost": "^4.7.1",
+    "open": "^8.4.0",
     "selenium-webdriver": "^4.1.1",
     "suncalc2": "^1.8.1"
   },
   "scripts": {
-    "start": "PORT=3000 serve > serve.txt",
+    "start": "npm-run-all -p start:prod-server openBrowser",
+    "start:prod-server": "PORT=3000 serve > serve.txt",
+    "openBrowser": "node openBrowser.js",
+    "test": "npm-run-all -r -p start:test-server start:test",
     "start:test-server": "PORT=3001 serve > serve.txt",
-    "start:test": "jest",
-    "test": "npm-run-all -r -p start:test-server start:test"
+    "start:test": "jest"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.17.9",
