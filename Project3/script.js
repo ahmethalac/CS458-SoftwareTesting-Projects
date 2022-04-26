@@ -8,14 +8,23 @@ const showError = text => {
 }
 
 let marker;
-const setCountry = async coordinates => {
-    window.map.setZoom(6);
+const showMarker = (coordinates, text) => {
     if (marker) marker.setMap(null);
     marker = new google.maps.Marker({
         position: coordinates,
         map: window.map
     });
+    window.infowindow.setContent(text);
+    window.infowindow.open(map, marker);
+}
+
+const setMapCenter = coordinates => {
+    window.map.setZoom(6);
     window.map.setCenter(coordinates);
+}
+
+const showCountry = async coordinates => {
+    setMapCenter(coordinates);
 
     let results;
     try {
@@ -34,40 +43,25 @@ const setCountry = async coordinates => {
 
     document.getElementById('country').textContent = country;
 
-    window.infowindow.setContent(country);
-    window.infowindow.open(map, marker);
+    showMarker(coordinates, country);
 }
 
-const setLocation = async coordinates => {
+const showNorthPoleDistance = coordinates => {
     const distanceToNorthPole = google.maps.geometry.spherical.computeDistanceBetween({ lat: 90, lng: 0 }, coordinates);
     const distanceInKms = Math.floor(distanceToNorthPole / 1000);
     document.getElementById('northPole').textContent = distanceInKms;
 
-    window.map.setZoom(6);
-    if (marker) marker.setMap(null);
-    marker = new google.maps.Marker({
-        position: coordinates,
-        map: window.map
-    });
-    window.map.setCenter(coordinates);
-    window.infowindow.setContent(`${distanceInKms} kms`);
-    window.infowindow.open(map, marker);
+    setMapCenter(coordinates);
+    showMarker(coordinates, `${distanceInKms} kms`);
 }
 
-const setMoonDistance = async coordinates => {
+const showMoonDistance = coordinates => {
     const { latitude, longitude } = coordinates;
     const distanceToMoon = Math.round(window.SunCalc.getMoonPosition(new Date(), latitude, longitude).distance);
     document.getElementById('moon').textContent = distanceToMoon;
 
-    window.map.setZoom(6);
-    if (marker) marker.setMap(null);
-    marker = new google.maps.Marker({
-        position: coordinates,
-        map: window.map
-    });
-    window.map.setCenter(coordinates);
-    window.infowindow.setContent(`${distanceToMoon} kms`);
-    window.infowindow.open(map, marker);
+    setMapCenter(coordinates);
+    showMarker(coordinates, `${distanceToMoon} kms`);
 }
 
 const validateLatLng = (lat, lng) => {
@@ -108,12 +102,12 @@ document.getElementById('showCountry').addEventListener('click', async () => {
 
     const validatedCoordinates = validateLatLng(lat, lng);
     if (!validatedCoordinates) return;
-    await setCountry(validatedCoordinates);
+    await showCountry(validatedCoordinates);
 });
 
 document.getElementById('showCountry-autoGPS').addEventListener('click', async () => {
     window.navigator.geolocation.getCurrentPosition(async ({ coords: { latitude: lat, longitude: lng }}) => {
-        await setCountry({ lat, lng });
+        await showCountry({ lat, lng });
     });
 });
 
@@ -124,12 +118,12 @@ document.getElementById('showNorthPoleDistance').addEventListener('click', async
     const validatedCoordinates = validateLatLng(lat, lng);
     if (!validatedCoordinates) return;
     
-    setLocation(validatedCoordinates);
+    showNorthPoleDistance(validatedCoordinates);
 });
 
 document.getElementById('showNorthPoleDistance-autoGPS').addEventListener('click', async () => {
     window.navigator.geolocation.getCurrentPosition(async ({ coords: { latitude: lat, longitude: lng }}) => {
-        setLocation({ lat, lng });
+        showNorthPoleDistance({ lat, lng });
     });
 });
 
@@ -140,11 +134,11 @@ document.getElementById('showMoonDistance').addEventListener('click', async () =
     const validatedCoordinates = validateLatLng(lat, lng);
     if (!validatedCoordinates) return;
     
-    setMoonDistance(validatedCoordinates);
+    showMoonDistance(validatedCoordinates);
 });
 
 document.getElementById('showMoonDistance-autoGPS').addEventListener('click', async () => {
     window.navigator.geolocation.getCurrentPosition(async ({ coords: { latitude: lat, longitude: lng }}) => {
-        setMoonDistance({ lat, lng });
+        showMoonDistance({ lat, lng });
     });
 });
